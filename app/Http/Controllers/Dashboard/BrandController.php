@@ -44,12 +44,32 @@ class BrandController extends Controller
         }
     }
 
-    public function list(){
+    public function list(Request $request){
+        $limit = 5;
+        $page = $request->page;
+        $offset = ($page - 1) * $limit;
 
-        $brands = Brand::orderBy('id', 'desc')->with('category')->get();
+        if(!empty($request->search)){
+              $brands = Brand::where('name', 'like', '%'.$request->search.'%')->orderBy('id', 'desc')->with('category')->limit($limit)->offset($offset)->get();
+              $totalpageBrands = Brand::where('name', 'like', '%'.$request->search.'%')->count();
+        }else{
+            $brands = Brand::orderBy('id', 'desc')->with('category')->limit($limit)->offset($offset)->get();
+            $totalpageBrands = Brand::count();
+        }
+
+
+
+        // total count of brands
+
+        $totalpage = ceil($totalpageBrands / $limit);
 
         return response([
             'status' => 200,
+            'page' => [
+                'totalpageBrands' => $totalpageBrands,
+                'totalpage' => $totalpage,
+                'currentpage' => $page,
+            ],
             'brands' => $brands
         ]);
     }
@@ -74,7 +94,7 @@ class BrandController extends Controller
     public function update(Request $request){
 
         $validator = Validator::make($request->all(),[
-            'name' => 'required'
+            'name' => 'required|unique:brands,name,'.$request->brand_id,
         ]);
 
         if($validator->passes()){

@@ -163,15 +163,18 @@ class CategoryController extends Controller
           if($request->input('imageCategory')){
                 $imgTemp = public_path('uploads/temp/'.$request->input('imageCategory'));
                 $imgCate = public_path('uploads/category/'.$request->Input('imageCategory'));
-                if(file_exists($imgTemp)){
+                if(File::exists($imgTemp)){
                     copy($imgTemp, $imgCate);
-                    unlink($imgTemp);
+                    File::delete($imgTemp);
                 }
 
                 // Delete old image
                 $oldImagePath = public_path('uploads/category/'.$category->image);
-                if(file_exists($oldImagePath)){
-                    unlink($oldImagePath);
+                // if(file_exists($oldImagePath)){
+                //     unlink($oldImagePath);
+                // }
+                if(File::exists($oldImagePath)){
+                    File::delete($oldImagePath);
                 }
 
                 $image = $request->input('imageCategory');

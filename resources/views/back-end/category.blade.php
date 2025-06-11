@@ -1,5 +1,16 @@
 @extends('back-end.components.master')
 @section('contents')
+ @if (session('success'))
+        <div class="alert text-light" id="error-alert" style="background: blue">
+            {{ session('success') }}
+        </div>
+        <script>
+            setTimeout(function() {
+            var alert = document.getElementById('error-alert');
+            if(alert) alert.style.display = 'none';
+            }, 3000);
+        </script>
+    @endif
      <div class="row">
         {{-- Modal start --}}
         {{-- @include('back-end.messages.user.create') --}}
@@ -109,7 +120,7 @@
                 success: function (response) {
                     if(response.status == 200){
                         let img = `
-                            <input type="text" name="imageCategory" value="${response.image}">
+                            <input type="hidden" name="imageCategory" value="${response.image}">
                             <img style="width:300px; height:300px" src="{{asset('uploads/temp/${response.image}')}}" >
                             <button onclick="cancelUploadImage('${response.image}')" type="button" class="btn btn-danger btn-sm rounded-0 btn-cancel-upload">Cancel</button>
                         `;
