@@ -3,7 +3,7 @@
           <a class="navbar-brand brand-logo" href="index.html">
             <img src="{{ asset('assets/images/logo.svg')}}" alt="logo" /> </a>
           <a class="navbar-brand brand-logo-mini" href="index.html">
-            <img src="{{ asset('assets/images/logo-mini.svg')}}" alt="logo" /> </a>
+            <img src="{{ asset('uploads/user/'.Auth::user()->image) }}" alt="logo" /> </a>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-center">
           <ul class="navbar-nav">
@@ -60,7 +60,7 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item preview-item">
                   <div class="preview-thumbnail">
-                    <img src="{{ asset('assets/images/faces/face10.jpg')}}" alt="image" class="img-sm profile-pic">
+                    <img src="{{ asset('uploads/user/'.Auth::user()->image) }}" alt="image" class="img-sm profile-pic">
                   </div>
                   <div class="preview-item-content flex-grow py-2">
                     <p class="preview-subject ellipsis font-weight-medium text-dark">Marian Garner </p>
@@ -69,7 +69,7 @@
                 </a>
                 <a class="dropdown-item preview-item">
                   <div class="preview-thumbnail">
-                    <img src="{{ asset('assets/images/faces/face12.jpg')}}" alt="image" class="img-sm profile-pic">
+                    <img src="{{ asset('uploads/user/'.Auth::user()->image) }}" alt="image" class="img-sm profile-pic">
                   </div>
                   <div class="preview-item-content flex-grow py-2">
                     <p class="preview-subject ellipsis font-weight-medium text-dark">David Grey </p>
@@ -78,7 +78,7 @@
                 </a>
                 <a class="dropdown-item preview-item">
                   <div class="preview-thumbnail">
-                    <img src="{{ asset('assets/images/faces/face1.jpg')}}" alt="image" class="img-sm profile-pic">
+                    <img src="{{ asset('uploads/user/'.Auth::user()->image) }}" alt="image" class="img-sm profile-pic">
                   </div>
                   <div class="preview-item-content flex-grow py-2">
                     <p class="preview-subject ellipsis font-weight-medium text-dark">Travis Jenkins </p>
@@ -128,10 +128,18 @@
             </li>
             <li class="nav-item dropdown d-none d-xl-inline-block user-dropdown">
               <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                <img class="img-xs rounded-circle" src="" alt="Profile image"> </a>
+                 @if (Auth::user()->image != null)
+              <img class="img-xs rounded-circle" src="{{ asset('uploads/user/'.Auth::user()->image) }}" alt="Profile image"> </a>
+            @else
+              <img class="img-xs rounded-circle" src="{{ asset('back-end/assets/images/faces/face8.jpg') }}" alt="Profile image"> </a>
+            @endif
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                 <div class="dropdown-header text-center">
-                  <img class="img-md rounded-circle" src="" alt="Profile image">
+                   @if (Auth::user()->image != null)
+              <img class="img-xs rounded-circle" src="{{ asset('uploads/user/'.Auth::user()->image) }}" alt="Profile image"> </a>
+            @else
+              <img class="img-xs rounded-circle" src="{{ asset('back-end/assets/images/faces/face8.jpg') }}" alt="Profile image"> </a>
+            @endif
                   <p style="text-transform: uppercase" class="mb-1 mt-3 font-weight-semibold">{{ (Auth::check()) ? Auth::user()->name : "Thearak"}}</p>
                   <p class="font-weight-light text-muted mb-0">{{ (Auth::check()) ? Auth::user()->email : "Thearak@gmail.com"}}</p>
                 </div>

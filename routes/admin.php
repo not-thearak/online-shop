@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\ColorController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ImageController;
 use App\Http\Controllers\Dashboard\ProductController;
+use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Middleware\AuthMiddleware;
 use App\Http\Middleware\DashboardMiddleware;
@@ -14,31 +15,22 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
-// Auth Router
+
+Route::prefix('admin')->group(function(){
+    Route::middleware('guest.admin')->group(function(){
+        Route::get('/',[AuthController::class,'login'])->name('auth.index');
+        Route::post('/login',[AuthController::class,'authenticate'])->name('auth.authenticate');
+    });
+    Route::middleware('auth.admin')->group(function(){
 
 
-// Route with prefix 'dashboard'
-Route::group(['prefix' => 'admin'], function () {
-    Route::get('/',[AuthController::class,'login'])->name('auth.index');
-    Route::post('/login',[AuthController::class,'authenticate'])->name('auth.authenticate');
+        Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard.index');
 
-    // Middleware to protect routes
-    Route::middleware(AuthMiddleware::class)->group(function(){
-        //logout
-        Route::get('/logout',[AuthController::class,'logout'])->name('auth.logout');
-
-        // Dashboard Router
-        Route::middleware(DashboardMiddleware::class)->group(function(){
-
-            Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard.index');
-
-            // User Router
-            Route::get('/user',[UserController::class,'index'])->name('user.index');
-            Route::post('/user/list',[UserController::class,'list'])->name('user.list');
-            Route::post('/user/store',[UserController::class,'store'])->name('user.store');
-            Route::post('/user/destroy',[UserController::class,'destroy'])->name('user.destroy');
-        });
-
+        // User Router
+        Route::get('/user',[UserController::class,'index'])->name('user.index');
+        Route::post('/user/list',[UserController::class,'list'])->name('user.list');
+        Route::post('/user/store',[UserController::class,'store'])->name('user.store');
+        Route::post('/user/destroy',[UserController::class,'destroy'])->name('user.destroy');
 
         // Category Router
         Route::get('/category',[CategoryController::class,'index'])->name('category.index');
@@ -75,12 +67,18 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/product/update',[ProductController::class,'update'])->name('product.update');
         Route::post('/product/destroy',[ProductController::class,'destroy'])->name('product.destroy');
 
+        // Profile Router
+        Route::get('/profile',[ProfileController::class, 'index'])->name('profile.index');
+        Route::post('/profile/change/password',[ProfileController::class, 'changePassword'])->name('profile.change.password');
+        Route::post('/profile/update',[ProfileController::class,'updateProfile'])->name('profile.update');
+        Route::post('profile/change/image',[ProfileController::class,'changeImageProfile'])->name('profile.change.image');
+
         // Image Router
         Route::post('/image/upload',[ImageController::class,'uploads'])->name('image.upload');
         Route::post('/image/cancel',[ImageController::class,'cancel'])->name('image.cancel');
+
+         //logout
+        Route::get('/logout',[AuthController::class,'logout'])->name('auth.logout');
     });
-
-
 });
-
 

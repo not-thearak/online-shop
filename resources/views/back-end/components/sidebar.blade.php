@@ -3,7 +3,7 @@
             <li class="nav-item nav-profile">
               <a href="#" class="nav-link">
                 <div class="profile-image">
-                  <img class="img-xs rounded-circle" src="" alt="profile image">
+                  <img class="img-xs rounded-circle" src="{{ asset('uploads/user/'.Auth::user()->image) }}" alt="profile image">
                   <div class="dot-indicator bg-success"></div>
                 </div>
                 <div class="text-wrapper">
@@ -46,6 +46,12 @@
                 <a class="nav-link" href="{{ route('product.index') }}">
                     <i class="menu-icon typcn typcn-document-text"></i>
                     <span class="menu-title">Product</span>
+                </a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" href="{{ route('profile.index') }}">
+                    <i class="menu-icon typcn typcn-document-text"></i>
+                    <span class="menu-title">Profile</span>
                 </a>
             </li>
 

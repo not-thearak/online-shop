@@ -7,7 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthMiddleware
+// Middlerouter
+// Middlewaregroup
+// MiddlwareGlobal
+
+class AdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,11 +20,11 @@ class AuthMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // if user already checked
         if(Auth::check()){
-            return $next($request);
-        }else{
-            return redirect()->route('auth.index')->with('error', 'You must be logged in to access this page');
+            return $next($request); // next
         }
 
+        return redirect()->route('auth.index');
     }
 }

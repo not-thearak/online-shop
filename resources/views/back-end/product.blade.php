@@ -151,7 +151,11 @@
                                 </ul>
                             </nav>
                         `;
-                        $('.show-pagination').html(pagi);
+                        if(totalpages > 1){
+                            $('.show-pagination').html(pagi);
+                        }else{
+                            $('.show-pagination').html('');
+                        }
                         // End Show Pagination
                     }
                 }
