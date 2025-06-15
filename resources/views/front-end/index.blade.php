@@ -56,7 +56,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="category-box">
-                        <a href="#!">
+                        <a href="{{ route('product.category',$categories[0]->id) }}">
                             <img src="{{ asset('uploads/category/' . $categories[0]->image) }}" alt="" />
                             <div class="content">
                                 <h3>{{ $categories[0]->name }}</h3>
@@ -65,7 +65,7 @@
                         </a>
                     </div>
                     <div class="category-box">
-                        <a href="#!">
+                        <a href="{{ route('product.category',$categories[1]->id) }}">
                             <img src="{{ asset('uploads/category/' . $categories[1]->image) }}" alt="" />
                             <div class="content">
                                 <h3>{{ $categories[1]->name }}</h3>
@@ -76,7 +76,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="category-box category-box-2">
-                        <a href="#!">
+                        <a href="{{ route('product.category',$categories[2]->id) }}">
                             <img src="{{ asset('uploads/category/' . $categories[2]->image) }}" alt="" />
                             <div class="content">
                                 <h3>{{ $categories[2]->name }}</h3>
@@ -180,6 +180,30 @@
             </div>
         </div>
     </section>
+
+  {{-- <--  Start Call To Action
+==================================== --> --}}
+<section class="call-to-action bg-gray section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<div class="title">
+					<h2>SUBSCRIBE TO NEWSLETTER</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat, <br> facilis numquam impedit ut sequi. Minus facilis vitae excepturi sit laboriosam.</p>
+				</div>
+				<div class="col-lg-6 col-md-offset-3">
+				    <div class="input-group subscription-form">
+				      <input type="text" class="form-control" placeholder="Enter Your Email Address">
+				      <span class="input-group-btn">
+				        <button class="btn btn-main" type="button">Subscribe Now!</button>
+				      </span>
+				    </div><!-- /input-group -->
+			  </div><!-- /.col-lg-6 -->
+
+			</div>
+		</div> 		<!-- End row -->
+	</div>   	<!-- End container -->
+</section>   <!-- End section -->
 @endsection
 @section('scripts')
     <script>
@@ -228,5 +252,7 @@
                 }
             });
         }
+
+
     </script>
 @endsection

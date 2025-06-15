@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('image')->nullable();
+            // index 1 Admin Dashboard , 2. Customer
             $table->enum("role",[1,2,3]);
             $table->timestamps();
         });

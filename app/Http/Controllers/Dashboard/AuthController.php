@@ -40,8 +40,8 @@ class AuthController extends Controller
                 if(Auth::user()->role == 1){
                     // Authentication passed...
                     return redirect()->route('dashboard.index')->with('success', 'Welcome, ' . Auth::user()->name . '! You Login successful');
-                }elseif(Auth::user()->role == 2){
-                    return redirect()->route('category.index')->with('success', 'Welcome, ' . Auth::user()->name . '! You Login successful');
+                }else{
+                    return redirect()->back()->with('error', 'You are not an Admin');
                 }
 
             } else {

@@ -23,6 +23,27 @@ class HomeController extends Controller
         return view('front-end.index', $data);
     }
 
+     public function productCategory(string $id){
+
+
+        $products = Product::where('category_id',$id)
+                    ->where('status',1)->with('Images')
+                    ->paginate(9);
+
+
+        if(!$products){
+            return response()->json([
+               'status' => 404,
+               'message' => 'Category not found'
+            ]);
+        }
+
+        return view('front-end.shop',[
+            'products' => $products
+        ]);
+
+    }
+
     public function viewProduct(Request $request){
         // Fetch product details
         $product = Product::where('id',$request->id)->with('Images')->first();
